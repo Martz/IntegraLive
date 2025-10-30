@@ -1,9 +1,10 @@
 /// Core data models for IntegraLive Swift port
-/// 
+///
 /// This file contains the fundamental data structures that represent
 /// the IntegraLive domain model, ported from the original ActionScript/C++ implementation.
 
 import Foundation
+import SwiftUI
 
 // MARK: - Project Model
 
@@ -45,16 +46,20 @@ public class Scene {
 
 /// Represents a block (audio/processing module) in a scene
 /// Corresponds to Block.as in the original GUI
-public class Block {
+public class Block: ObservableObject {
     public var id: UUID
-    public var name: String
-    public var moduleInstance: ModuleInstance?
-    public var connections: [Connection]
-    
-    public init(name: String) {
+    @Published public var name: String
+    @Published public var moduleInstance: ModuleInstance?
+    @Published public var connections: [Connection]
+    @Published public var position: CGPoint
+    @Published public var size: CGSize
+
+    public init(name: String, position: CGPoint = .zero) {
         self.id = UUID()
         self.name = name
         self.connections = []
+        self.position = position
+        self.size = CGSize(width: 120, height: 80)
     }
 }
 
